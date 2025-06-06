@@ -66,21 +66,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     <form id="signup-form" method="POST">
         <div class="input-group">
-            <input type="text" id="name" name="name" placeholder="Full Name" required 
-                   value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>">
+            <input type="text" id="name" name="name" placeholder="Pharmacy Name" required>
         </div>
+
+         <div class="input-group">
+            <input type="text" id="owner" name="owner" placeholder="Owner Full Name" required>
+        </div>
+
         <div class="input-group">
-            <input type="email" id="email" name="email" placeholder="Email" required
-                   value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+            <input type="email" id="email" name="email" placeholder="Email" required>
         </div>
+
+         <div class="input-group">
+            <input type="tel" id="phonenum" name="phonenum" placeholder="Phone number" required>
+        </div>
+
         <div class="input-group">
             <input type="password" id="password" name="password" placeholder="Password" required>
         </div>
         <div class="input-group">
             <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
         </div>
+
+        <div class="input-group">
+            <input type="text" id="location" name="location" placeholder="Enter your city or address" required>
+        </div>
+        
         <button type="submit" class="signin-btn">Sign Up</button>
-        <p class="signup-link">Already have an account? <a href="signin.php">Sign In</a></p>
+        <p class="signup-link">Already have an account? <a href="../html/signin.html">Sign In</a></p>
     </form>
 </div>
 
