@@ -1,52 +1,60 @@
 <?php
-
-// include "db.php";
-
 session_start();
-
-
+include "db.php"; // Make sure db.php only connects to DB (no redirection)
 
 $page_title = "Sign Up";
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['name']);
+    $owner = trim($_POST['owner']);
     $email = trim($_POST['email']);
+    $phonenum = trim($_POST['phonenum']);
+    $location = trim($_POST['location']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    
+
     // Validate inputs
-    if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) {
+    if (empty($name) || empty($owner) || empty($email) || empty($phonenum) || empty($location) || empty($password) || empty($confirm_password)) {
         $error = "All fields are required";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email format";
     } elseif ($password !== $confirm_password) {
         $error = "Passwords do not match";
-    } elseif (strlen($password) < 8) {
+    } elseif (strlen($password) < 2) {
         $error = "Password must be at least 8 characters long";
     } else {
-        // Check if email exists
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        // Check if email already exists
+        $stmt = $conn->prepare("SELECT id FROM pharmacy WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
-        
+
         if ($stmt->num_rows > 0) {
             $error = "Email already registered";
         } else {
-            // if (registerUser($name, $email, $password)) {
-            //     header("Location: signin.php?registered=1");
-            //     exit();
-            // } else {
+            // Hash password
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            // Insert into database
+            $insert = $conn->prepare("INSERT INTO pharmacy (Pharmacy_name, owner_name, email, phone_number, location, pass) VALUES (?, ?, ?, ?, ?, ?)");
+            $insert->bind_param("ssssss", $name, $owner, $email, $phonenum, $location, $hashed_password);
+
+            if ($insert->execute()) {
+                $_SESSION['pharmacy_id'] = $stmt->insert_id;
+                $_SESSION['pharmacy_name'] = $name;
+                header("Location: ../html/Addmed.html");
+                exit();
+            } else {
                 $error = "Registration failed. Please try again.";
             }
+            $insert->close();
         }
         $stmt->close();
     }
-
-
-// require_once 'includes/header.php';
+}
 ?>
+
 <head>
     <link rel="stylesheet" href="../css/signin.css">
 </head>
@@ -93,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         
         <button type="submit" class="signin-btn">Sign Up</button>
-        <p class="signup-link">Already have an account? <a href="../html/signin.html">Sign In</a></p>
+        <p class="signup-link">Already have an account? <a href="login.php">Sign In</a></p>
     </form>
 </div>
 
