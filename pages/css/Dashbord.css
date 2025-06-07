@@ -1,0 +1,73 @@
+:root {
+    --primary-blue: #167de3;
+    --gradient-start: #62e1f1;
+    --gradient-end: #1b2688;
+    --dark-bg: #050A24;
+    --text-light: #ffffff;
+    --card-bg: rgba(17, 24, 39, 0.8);
+    --faq-bg: #1f2937cc;
+    --footer-bg: #050A24;
+}
+body
+
+{
+    background-color: var(--dark-bg);
+}
+.logo{ 
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-light);
+ font-family: "Unbounded", sans-serif;
+ 
+}
+.logo span {
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.Message{
+
+    position: absolute;
+    top: 10vw;
+    left: 18vw;
+}
+.Message h1
+{
+color: rgb(130, 207, 15);
+font-weight: bold;
+font-size: 45px;
+ font-family: "Unbounded", sans-serif;
+}
+.Message h1 svg
+{
+    position: relative;
+    top: 14px;
+}
+.update
+{
+position: relative;
+left: 85vw;
+top: -25px;
+}
+.update button
+{
+    text-decoration: none;
+    background-color: var(--primary-blue);
+    width: 100px;
+    height: 40px;
+    border-radius: 15px;
+    color: rgb(224, 220, 220);
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    background:rgb(10, 62, 135);
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.20s ;
+
+}
+.update button:hover
+{
+opacity: 1;
+}

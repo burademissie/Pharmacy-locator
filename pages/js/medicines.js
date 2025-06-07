@@ -4,29 +4,29 @@ document.addEventListener("DOMContentLoaded", function () {
   const resultsSection = document.getElementById("resultsSection");
   const notFoundMessage = document.getElementById("notFoundMessage");
 
-  function displayMedicineCards(medicines) {
+  function displayMedicineCards(Pharmacies) {
     resultsSection.innerHTML = "";
 
-    if (medicines.length === 0) {
+    if (Pharmacies.length === 0) {
       notFoundMessage.style.display = "block";
       resultsSection.style.display = "none";
     } else {
       notFoundMessage.style.display = "none";
-      resultsSection.style.display = "grid";
+      resultsSection.style.display = "block";
 
-      medicines.forEach((medicine) => {
+      Pharmacies.forEach((pharmacy) => {
         const card = document.createElement("div");
-        card.className = "medicine-card";
+        card.className = "pharmacy-card";
         card.innerHTML = `
-          <div class="medicine-icon">
-            <i class="fas fa-pills"></i>
+          <div class="pharmacy-icon">
+            <i class="fas fa-hospital"></i>
           </div>
-          <div class="medicine-info">
-            <h3 class="medicine-name">${medicine.medicine_name}</h3>
-            <p class="medicine-description">${medicine.description}</p>
-            <div class="medicine-details">
-              <span class="medicine-price">₦${medicine.price}</span>
-              <span class="medicine-stock">In Stock: ${medicine.quantity}</span>
+          <div class="pharmacy-info">
+            <h3 class="pharmacy-name">${pharmacy.medicine_name}</h3>
+            <div class="pharmacy-details">
+              <span class="pharmacy-currently">Currently: ${pharmacy.quantity}</span>
+              <span class="pharmacy-location">Location: ${pharmacy.price}</span>
+
             </div>
           </div>
         `;
