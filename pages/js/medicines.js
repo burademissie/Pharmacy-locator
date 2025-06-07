@@ -19,15 +19,15 @@ document.addEventListener("DOMContentLoaded", function () {
         card.className = "medicine-card";
         card.innerHTML = `
           <div class="medicine-icon">
-            <i class="fas fa-pills"></i>
+            <i class="fas fa-hospital"></i>
           </div>
-          <div class="medicine-info">
-            <h3 class="medicine-name">${medicine.medicine_name}</h3>
-            <p class="medicine-description">${medicine.description}</p>
-            <div class="medicine-details">
-              <span class="medicine-price">₦${medicine.price}</span>
-              <span class="medicine-stock">In Stock: ${medicine.quantity}</span>
-            </div>
+          // <div class="medicine-info">
+          //   <h3 class="medicine-name">${medicine.medicine_name}</h3>
+          //   <p class="medicine-description">${medicine.description}</p>
+            // <div class="medicine-details">
+            //   <span class="medicine-price">₦${medicine.price}</span>
+            //   <span class="medicine-stock">In Stock: ${medicine.quantity}</span>
+            // </div>
           </div>
         `;
         resultsSection.appendChild(card);

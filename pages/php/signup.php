@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $insert->bind_param("ssssss", $name, $owner, $email, $phonenum, $location, $hashed_password);
 
             if ($insert->execute()) {
-                $_SESSION['pharmacy_id'] = $stmt->insert_id;
+                $_SESSION['pharmacy_id'] = $insert->insert_id;
                 $_SESSION['pharmacy_name'] = $name;
                 header("Location: ../html/Addmed.html");
                 exit();

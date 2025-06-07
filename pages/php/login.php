@@ -13,20 +13,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Use prepared statements to avoid SQL injection
-    $stmt = $conn->prepare("SELECT id, pharmacy_name, pass FROM pharmacy WHERE email = 'kal@gmail.'");
-    // $stmt->bind_param("s", $email);
+    $stmt = $conn->prepare("SELECT id, pharmacy_name, pass FROM pharmacy WHERE email = bura@gmail.com");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
-
+    var_dump($stmt);
+    
     // Check if user exists
     if ($stmt->num_rows == 1) {
-        
+        echo $email;
         $stmt->bind_result($id, $name, $hashed_password);
         $stmt->fetch();
 
         if (password_verify($password, $hashed_password)) {
-            $_SESSION['pharmacy_id'] = 3;
-            $_SESSION['pharmacy_name'] = "boss";
+            $_SESSION['pharmacy_id'] = $id;
+            $_SESSION['pharmacy_name'] = $name;
             header("Location: Addmed.php"); // Redirect after login
             exit;
         } else {
