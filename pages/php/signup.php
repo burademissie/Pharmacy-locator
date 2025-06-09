@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "db.php"; // Make sure db.php only connects to DB (no redirection)
+include "./db.php"; // Make sure db.php only connects to DB (no redirection)
 
 $page_title = "Sign Up";
 $error = '';

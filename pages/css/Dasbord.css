@@ -1,0 +1,203 @@
+:root {
+    --primary-blue: #167de3;
+    --gradient-start: #62e1f1;
+    --gradient-end: #1b2688;
+    --dark-bg: #050A24;
+    --text-light: #ffffff;
+    --card-bg: rgba(29, 42, 71, 0.8);
+    --sidebar-bg: rgba(5, 10, 36, 0.9);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Unbounded', sans-serif;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    overflow-x: hidden;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    backdrop-filter: blur(10px);
+    padding: 2rem 1rem;
+    position: fixed;
+    height: 100vh;
+    border-right: 1px solid rgba(98, 225, 241, 0.1);
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav li {
+    margin-bottom: 1rem;
+}
+
+.sidebar-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav a:hover {
+    background: rgba(98, 225, 241, 0.1);
+    color: var(--gradient-start);
+}
+
+.sidebar-nav a.active {
+    background: rgba(98, 225, 241, 0.2);
+    color: var(--gradient-start);
+}
+
+.sidebar-nav i {
+    margin-right: 0.8rem;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 2rem 3rem;
+}
+
+/* Results Section */
+.results-section {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.pharmacy-card {
+    background: var(--card-bg);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(98, 225, 241, 0.1);
+    height: 115px;
+}
+
+.pharmacy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(98, 225, 241, 0.1);
+}
+
+.pharmacy-name {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--gradient-start);
+}
+
+.pharmacy-description {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+.pharmacy-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.update-btn {
+    margin-left:2rem;
+    padding:0.5rem 1.2rem;
+    background:linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    color:white;
+    border:none;
+    border-radius:1rem;
+    cursor:pointer;
+    font-weight:600;
+}
+
+/* Not Found Message */
+.not-found {
+    text-align: center;
+    padding: 3rem;
+    background: var(--card-bg);
+    border-radius: 1rem;
+    border: 1px solid rgba(98, 225, 241, 0.1);
+    display: none;
+    grid-column: 1 / -1;
+}
+
+.not-found i {
+    font-size: 3rem;
+    color: var(--gradient-start);
+    margin-bottom: 1.5rem;
+}
+
+.not-found h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--gradient-start);
+}
+
+.not-found p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+}
+.h1-dash{
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    font-size: 2rem;
+}
+.Addmed-btn{
+    padding: 0.7rem 2rem; 
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end)); 
+    color: white; 
+    border: none; 
+    border-radius: 2rem; 
+    font-size: 1rem; 
+    cursor: pointer; 
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 1rem;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 1.5rem;
+    }
+} 
