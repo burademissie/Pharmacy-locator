@@ -1,30 +1,52 @@
+/* dashboard.css */
 :root {
     --primary-blue: #167de3;
     --gradient-start: #62e1f1;
     --gradient-end: #1b2688;
     --dark-bg: #050A24;
     --text-light: #ffffff;
-    --card-bg: rgba(17, 24, 39, 0.8);
-    --faq-bg: #1f2937cc;
-    --footer-bg: #050A24;
+    --card-bg: rgba(29, 42, 71, 0.8);
+    --sidebar-bg: rgba(5, 10, 36, 0.9);
 }
-body
 
-{
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Unbounded', sans-serif;
+}
+
+body {
     background-color: var(--dark-bg);
-}
-.logo{ 
-    font-size: 1.6rem;
-    font-weight: 800;
     color: var(--text-light);
- font-family: "Unbounded", sans-serif;
- 
+    overflow-x: hidden;
 }
-.logo span {
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    backdrop-filter: blur(10px);
+    padding: 2rem 1rem;
+    position: fixed;
+    height: 100vh;
+    border-right: 1px solid rgba(98, 225, 241, 0.1);
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
     background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+<<<<<<< HEAD
 .update
 {
 position: relative;
@@ -33,26 +55,37 @@ top: -25px;
 }
 .update button
 {
-    text-decoration: none;
-    background-color: var(--primary-blue);
-    width: 100px;
-    height: 40px;
-    border-radius: 15px;
-    color: rgb(224, 220, 220);
-    border: none;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    background:rgb(10, 62, 135);
-    font-weight: bold;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.20s ;
+=======
 
+.sidebar-nav ul {
+    list-style: none;
 }
-.update button:hover
-{
-opacity: 1;
+
+.sidebar-nav li {
+    margin-bottom: 1rem;
 }
+
+.sidebar-nav a {
+    color: var(--text-light);
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav a:hover {
+    background: rgba(98, 225, 241, 0.1);
+    color: var(--gradient-start);
+}
+
+.sidebar-nav a.active {
+    background: rgba(98, 225, 241, 0.2);
+    color: var(--gradient-start);
+}
+<<<<<<< HEAD
 Add commentMore actions
 * {
     margin: 0;
@@ -109,23 +142,160 @@ body {
     background: rgba(98, 225, 241, 0.2);
     color: var(--gradient-start);
 }
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .sidebar-nav i {
     margin-right: 0.8rem;
     font-size: 1.1rem;
     width: 20px;
     text-align: center;
 }
+<<<<<<< HEAD
+=======
+
+/* Main Content Styles */
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .main-content {
     margin-left: 250px;
     width: calc(100% - 250px);
     padding: 2rem 3rem;
 }
+<<<<<<< HEAD
+=======
+
+/* Header Container */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.main-header {
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2rem;
+}
+
+.add-medicine-btn {
+    padding: 0.7rem 2rem;
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.2s ease;
+}
+
+.add-medicine-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Results Section */
+.results-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.pharmacy-card {
+    background: var(--card-bg);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(98, 225, 241, 0.1);
+    height: 115px;
+}
+
+.pharmacy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(98, 225, 241, 0.1);
+}
+
+.pharmacy-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--gradient-start);
+}
+
+.pharmacy-description {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.pharmacy-details {
+    display: flex;
+    gap: 1.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+}
+
+.update-btn {
+    margin-left: 2rem;
+    padding: 0.5rem 1.2rem;
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    color: white;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+}
+
+.update-btn:hover {
+    opacity: 0.9;
+}
+
+/* Not Found Message */
+.not-found {
+    text-align: center;
+    padding: 3rem;
+    background: var(--card-bg);
+    border-radius: 1rem;
+    border: 1px solid rgba(98, 225, 241, 0.1);
+    display: none;
+    grid-column: 1 / -1;
+}
+
+.not-found i {
+    font-size: 3rem;
+    color: var(--gradient-start);
+    margin-bottom: 1.5rem;
+}
+
+.not-found h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--gradient-start);
+}
+
+.not-found p {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+}
+
+/* Additional Styles from the Second CSS */
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .stats-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .stats-card {
     background: var(--card-bg);
     border-radius: 1rem;
@@ -135,20 +305,36 @@ body {
     transition: all 0.3s ease;
     border: 1px solid rgba(98, 225, 241, 0.1);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .stats-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(98, 225, 241, 0.1);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .stats-icon {
     font-size: 2rem;
     color: var(--gradient-start);
     margin-right: 1.5rem;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .stats-info h3 {
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.8);
     margin-bottom: 0.5rem;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .stats-value {
     font-size: 1.5rem;
     font-weight: 700;
@@ -156,6 +342,10 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .welcome-card {
     background: var(--card-bg);
     border-radius: 1rem;
@@ -164,12 +354,20 @@ body {
     border: 1px solid rgba(98, 225, 241, 0.1);
     position: relative;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .welcome-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
     opacity: 0.7;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .welcome-text {
     position: absolute;
     top: 50%;
@@ -179,16 +377,28 @@ body {
     width: 100%;
     padding: 0 2rem;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .welcome-text h1 {
     font-size: 2rem;
     background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .search-section {
     margin-bottom: 3rem;
     text-align: center;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .search-section h1 {
     font-size: 2.2rem;
     margin-bottom: 1.5rem;
@@ -196,6 +406,10 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 .search-container {
     display: flex;
     max-width: 600px;
@@ -204,6 +418,10 @@ body {
     overflow: hidden;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 #searchInput {
     flex: 1;
     padding: 1rem 1.5rem;
@@ -212,13 +430,25 @@ body {
     color: var(--text-light);
     font-size: 1rem;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 #searchInput:focus {
     outline: none;
     background: rgba(255, 255, 255, 0.15);
 }
+<<<<<<< HEAD
 #searchInput::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
+=======
+
+#searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 #searchButton {
     padding: 0 1.5rem;
     background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
@@ -227,6 +457,7 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
 }
+<<<<<<< HEAD
 #searchButton:hover {
     background: linear-gradient(to right, #4fd1f1, #1a1f8a);
 }
@@ -250,10 +481,19 @@ body {
     box-shadow: 0 10px 20px rgba(98, 225, 241, 0.1);
 }
 .medicine-icon {
+=======
+
+#searchButton:hover {
+    background: linear-gradient(to right, #4fd1f1, #1a1f8a);
+}
+
+.pharmacy-icon {
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
     font-size: 2rem;
     color: var(--gradient-start);
     margin-right: 1.5rem;
 }
+<<<<<<< HEAD
 .medicine-info {
     flex: 1;
 }
@@ -277,10 +517,21 @@ body {
     color: var(--gradient-start);
     font-weight: 600;
 }
+=======
+
+.pharmacy-location {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    margin-top: 30px;
+    margin-left: 47vw;
+}
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 a {
     text-decoration: none;
     color: inherit;
 }
+<<<<<<< HEAD
 .medicine-stock {
     color: rgba(255, 255, 255, 0.6);
 }
@@ -311,6 +562,15 @@ a {
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 0.5rem;
 }
+=======
+
+.pharmacy-currently {
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 30px;
+}
+
+/* Responsive Design */
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
 @media (max-width: 768px) {
     .sidebar {
         width: 100%;
@@ -318,12 +578,34 @@ a {
         position: relative;
         padding: 1rem;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
     .main-content {
         margin-left: 0;
         width: 100%;
         padding: 1.5rem;
     }
+<<<<<<< HEAD
     .welcome-text h1 {
         font-size: 1.5rem;
     }
 }
+=======
+
+    .welcome-text h1 {
+        font-size: 1.5rem;
+    }
+    
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .pharmacy-location {
+        margin-left: 0;
+    }
+}
+>>>>>>> aaab7cb6cf44c8d55609a1e3cfc3cd0594a521b6
