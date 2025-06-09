@@ -6,13 +6,22 @@
     <title>Pharmacy Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/Dasbord.css">
+    <link rel="stylesheet" href="../css/Dashbord.css">
 </head>
 <body id="take" >
 <div class="logo">Med<span>Finder</span></div>
-<d class="update" >
-    <button>Add New</button>  
-    <button>Update</button>
+
+<div class="update">
+
+    <div class="update_btn"><button><svg class="svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+Update</button></div>
+    <div><button><svg class="svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+Add New</button></div>  
+</div>
                 <div class="results-section" id="resultsSection">
 
                 </div>
@@ -23,44 +32,12 @@
                     <p>Currently You Have No Medicine On Your Stock</p>
                     <p>Please Add Medicine First To See Them Listed Here</p>
                 </div>
-</div>
+
 
 
 
 
 <script src="../js/Dashbord.js" ></script>
-
-function renderMedicines() {
-    const list = document.getElementById('medicinesList');
-    const notFound = document.getElementById('notFoundMessage');
-    list.innerHTML = '';
-    if (medicines.length === 0) {
-        list.style.display = 'none';
-        notFound.style.display = 'block';
-    } else {
-        list.style.display = 'grid';
-        notFound.style.display = 'none';
-        medicines.forEach(med => {
-            const card = document.createElement('div');
-            card.className = 'pharmacy-card';
-            card.innerHTML = `
-                <div style="flex:1">
-                    <div class="pharmacy-name">${med.name}</div>
-                    <div class="pharmacy-description">${med.description}</div>
-                    <div class="pharmacy-details">
-                        <span>Price: $${med.price}</span>
-                        <span>Qty: ${med.quantity}</span>
-                    </div>
-                </div>
-                <button class="update-btn" style="margin-left:2rem; padding:0.5rem 1.2rem; background:linear-gradient(to right, var(--gradient-start), var(--gradient-end)); color:white; border:none; border-radius:1rem; cursor:pointer; font-weight:600;">Update</button>
-            `;
-            list.appendChild(card);
-        });
-    }
-}
-renderMedicines();
-// Add event for Add Medicine button
-// document.getElementById('addMedicineBtn').onclick = function() { ... };
 </script>
 </body>
 </html>
