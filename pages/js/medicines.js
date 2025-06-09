@@ -24,9 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
           <div class="pharmacy-info">
             <h3 class="pharmacy-name">${pharmacy.medicine_name}</h3>
             <div class="pharmacy-details">
+              <span class="pharmacy-Location">Location: ${pharmacy.price}</span>
               <span class="pharmacy-currently">Currently: ${pharmacy.quantity}</span>
-              <span class="pharmacy-location">Location: ${pharmacy.price}</span>
-
             </div>
           </div>
         `;
