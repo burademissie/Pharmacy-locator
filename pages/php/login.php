@@ -13,14 +13,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Use prepared statements to avoid SQL injection
-    $stmt = $conn->prepare("SELECT id, pharmacy_name, pass FROM pharmacy WHERE email = bura@gmail.com");
+    $stmt = $conn->prepare("SELECT id, pharmacy_name, pass FROM pharmacy WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
     var_dump($stmt);
     
     // Check if user exists
-    if ($stmt->num_rows == 1) {
+    if ($stmt->num_rows > 0) {
         echo $email;
         $stmt->bind_result($id, $name, $hashed_password);
         $stmt->fetch();

@@ -4,7 +4,7 @@
     --gradient-end: #1b2688;
     --dark-bg: #050A24;
     --text-light: #ffffff;
-    --card-bg: rgba(17, 24, 39, 0.8);
+    --card-bg: rgba(29, 42, 71, 0.8);
     --sidebar-bg: rgba(5, 10, 36, 0.9);
 }
 
@@ -227,7 +227,7 @@ body {
     margin-top: 2rem;
 }
 
-.medicine-card {
+.pharmacy-card {
     background: var(--card-bg);
     border-radius: 1rem;
     padding: 1.5rem;
@@ -235,52 +235,54 @@ body {
     align-items: center;
     transition: all 0.3s ease;
     border: 1px solid rgba(98, 225, 241, 0.1);
+    height: 115px;
 }
 
-.medicine-card:hover {
+.pharmacy-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(98, 225, 241, 0.1);
 }
 
-.medicine-icon {
+.pharmacy-icon {
     font-size: 2rem;
     color: var(--gradient-start);
     margin-right: 1.5rem;
 }
 
-.medicine-info {
-    flex: 1;
-}
 
-.medicine-name {
-    font-size: 1.2rem;
+.pharmacy-name {
+    font-size: 2rem;
     margin-bottom: 0.5rem;
     color: var(--gradient-start);
 }
 
-.medicine-description {
+.pharmacy-description {
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.9rem;
     margin-bottom: 0.8rem;
     line-height: 1.5;
 }
 
-.medicine-details {
+.pharmacy-details {
     display: flex;
     justify-content: space-between;
     font-size: 0.9rem;
+    position: relative;
 }
 
-.medicine-price {
-    color: var(--gradient-start);
+.pharmacy-location {
+    color: rgba(255, 255, 255, 0.6);
     font-weight: 600;
+    margin-top: 30px;
+   margin-left: 47vw;
 }
 a {
     text-decoration: none;
     color: inherit; /* Optional: inherit color from parent */
 }
-.medicine-stock {
+.pharmacy-currently {
     color: rgba(255, 255, 255, 0.6);
+    margin-top: 30px;
 }
 
 /* Not Found Message */

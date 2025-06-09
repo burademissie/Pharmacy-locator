@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($stmt->execute()) {
         // header("Location: ../dashboard/pharmacy_dashboard.php?status=added");
-        echo "🙏🏽 SUCCESSFULL INSERTION";
+        header("Location: ../html/Addmed.html");
         exit();
     } else {
         echo "Failed to add medicine. Please try again.";
