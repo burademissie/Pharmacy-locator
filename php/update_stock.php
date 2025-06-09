@@ -12,20 +12,20 @@ if (!isset($_SESSION['pharmacy_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
     
-    if (!isset($data['medicine_id']) || !isset($data['quantity'])) {
+    if (!isset($data['medicine_id'])) {
         http_response_code(400);
-        echo json_encode(['error' => 'Missing required fields']);
+        echo json_encode(['error' => 'Missing medicine ID']);
         exit();
     }
 
     $medicine_id = $data['medicine_id'];
     $pharmacy_id = $_SESSION['pharmacy_id'];
-    $quantity = (int)$data['quantity'];
-    $price = isset($data['price']) ? (float)$data['price'] : null;
-    $expire_date = isset($data['expire_date']) ? $data['expire_date'] : null;
+    $add_quantity = isset($data['add_quantity']) ? (int)$data['add_quantity'] : 0;
+    $remove_quantity = isset($data['remove_quantity']) ? (int)$data['remove_quantity'] : 0;
+    $new_price = isset($data['new_price']) ? (float)$data['new_price'] : null;
 
     // Verify the medicine belongs to this pharmacy
-    $check_stmt = $conn->prepare("SELECT id FROM medicine WHERE id = ? AND pharmacy_id = ?");
+    $check_stmt = $conn->prepare("SELECT quantity FROM medicine WHERE id = ? AND pharmacy_id = ?");
     $check_stmt->bind_param("ii", $medicine_id, $pharmacy_id);
     $check_stmt->execute();
     $result = $check_stmt->get_result();
@@ -36,21 +36,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
+    $current_quantity = $result->fetch_assoc()['quantity'];
+    $new_quantity = $current_quantity + $add_quantity - $remove_quantity;
+
+    if ($new_quantity < 0) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Cannot remove more items than available']);
+        exit();
+    }
+
     // Build update query based on provided fields
     $updates = ["quantity = ?"];
     $types = "i";
-    $params = [$quantity];
+    $params = [$new_quantity];
 
-    if ($price !== null) {
+    if ($new_price !== null) {
         $updates[] = "price = ?";
         $types .= "d";
-        $params[] = $price;
-    }
-
-    if ($expire_date !== null) {
-        $updates[] = "expire_date = ?";
-        $types .= "s";
-        $params[] = $expire_date;
+        $params[] = $new_price;
     }
 
     $update_query = "UPDATE medicine SET " . implode(", ", $updates) . " WHERE id = ? AND pharmacy_id = ?";
@@ -62,18 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $update_stmt->bind_param($types, ...$params);
 
     if ($update_stmt->execute()) {
-        echo json_encode([
-            'success' => true,
-            'message' => 'Stock updated successfully',
-            'updated' => [
-                'quantity' => $quantity,
-                'price' => $price,
-                'expire_date' => $expire_date
-            ]
-        ]);
+        echo json_encode(['success' => true, 'new_quantity' => $new_quantity]);
     } else {
         http_response_code(500);
-        echo json_encode(['error' => 'Failed to update stock']);
+        echo json_encode(['error' => 'Failed to update medicine']);
     }
 
     $update_stmt->close();

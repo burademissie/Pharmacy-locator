@@ -1,5 +1,6 @@
 // Global variables for modal management
 let currentModal = null;
+let currentDetailsModal = null;
 
 // Function to close modal
 function closeModal() {
@@ -8,6 +9,17 @@ function closeModal() {
         setTimeout(() => {
             currentModal.remove();
             currentModal = null;
+        }, 300);
+    }
+}
+
+// Function to close details modal
+function closeDetailsModal() {
+    if (currentDetailsModal) {
+        currentDetailsModal.classList.remove("active");
+        setTimeout(() => {
+            currentDetailsModal.remove();
+            currentDetailsModal = null;
         }, 300);
     }
 }
@@ -21,8 +33,54 @@ function showError(message) {
     setTimeout(() => errorDiv.remove(), 3000);
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Add event listeners to all update buttons
+// Function to display medicines
+function displayMedicines(medicines) {
+    const medicinesList = document.getElementById('medicinesList');
+    const notFoundMessage = document.getElementById('notFoundMessage');
+
+    if (!medicinesList || !notFoundMessage) {
+        console.error('Required elements not found');
+        return;
+    }
+
+    medicinesList.innerHTML = '';
+
+    if (medicines.length === 0) {
+        notFoundMessage.style.display = 'block';
+        medicinesList.style.display = 'none';
+        return;
+    }
+
+    notFoundMessage.style.display = 'none';
+    medicinesList.style.display = 'grid';
+
+    medicines.forEach(med => {
+        const card = document.createElement('div');
+        card.className = 'pharmacy-card';
+        card.innerHTML = `
+            <div class="pharmacy-name">
+                ${med.medicine_name}
+                <span style="font-size:0.7rem; color:rgba(255,255,255,0.6)">
+                    (${med.brand_name})
+                </span>
+            </div>
+            <div class="pharmacy-description">${med.description}</div>
+            <div class="pharmacy-details">
+                <span>Price: ብር${med.price}</span>
+                <span>Qty: ${med.quantity}</span>
+                <span>Form: ${med.form}</span>
+            </div>
+            <button class="update-btn" data-medicine-id="${med.id}">
+                <svg class="svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Update
+            </button>
+        `;
+        medicinesList.appendChild(card);
+    });
+
+    // Add event listeners to new update buttons
     document.querySelectorAll(".update-btn").forEach((button) => {
         button.addEventListener("click", function(e) {
             e.preventDefault();
@@ -34,22 +92,24 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     });
+}
 
-    // Close modal when clicking outside
-    document.addEventListener("click", function(e) {
-        if (currentModal && e.target === currentModal) {
-            closeModal();
+// Function to fetch medicines
+async function fetchMedicines() {
+    try {
+        const response = await fetch('../php/get_medicines.php');
+        if (!response.ok) {
+            throw new Error('Failed to fetch medicines');
         }
-    });
+        const medicines = await response.json();
+        displayMedicines(medicines);
+    } catch (error) {
+        console.error('Error fetching medicines:', error);
+        showError('Failed to load medicines. Please try again.');
+    }
+}
 
-    // Close modal when pressing Escape key
-    document.addEventListener("keydown", function(e) {
-        if (e.key === "Escape" && currentModal) {
-            closeModal();
-        }
-    });
-});
-
+// Function to open update modal
 function openUpdateModal(medId) {
     try {
         const card = document.querySelector(`[data-medicine-id="${medId}"]`).closest('.pharmacy-card');
@@ -61,7 +121,7 @@ function openUpdateModal(medId) {
         const priceText = card.querySelector('.pharmacy-details span:nth-child(1)').textContent;
         const quantityText = card.querySelector('.pharmacy-details span:nth-child(2)').textContent;
 
-        const price = parseFloat(priceText.replace('Price: ₦', '').trim());
+        const price = parseFloat(priceText.replace('Price: ብር', '').trim());
         const quantity = parseInt(quantityText.replace('Qty: ', '').trim());
 
         if (isNaN(price) || isNaN(quantity)) {
@@ -82,18 +142,18 @@ function openUpdateModal(medId) {
                     <h3>Update ${medicineName}</h3>
                     <button class="close-modal" type="button">&times;</button>
                 </div>
-                <form class="modal-form" id="updateForm">
+                <form class="update-form" id="updateForm">
                     <div>
-                        <label for="price">Price (₦)</label>
-                        <input type="number" id="price" step="0.01" value="${price}" required min="0">
+                        <label for="add_quantity">Add Quantity</label>
+                        <input type="number" id="add_quantity" min="0" placeholder="Enter quantity to add">
                     </div>
                     <div>
-                        <label for="quantity">Quantity</label>
-                        <input type="number" id="quantity" value="${quantity}" required min="0">
+                        <label for="remove_quantity">Remove Quantity</label>
+                        <input type="number" id="remove_quantity" min="0" placeholder="Enter quantity to remove">
                     </div>
                     <div>
-                        <label for="expire_date">Expiry Date</label>
-                        <input type="date" id="expire_date" required>
+                        <label for="new_price">New Price (ብር)</label>
+                        <input type="number" id="new_price" step="0.01" min="0" placeholder="Enter new price">
                     </div>
                     <button type="submit" class="save-btn">Save Changes</button>
                 </form>
@@ -131,25 +191,22 @@ function openUpdateModal(medId) {
     }
 }
 
+// Function to update medicine
 async function updateMedicine(id, form) {
     try {
-        const price = parseFloat(form.querySelector("#price").value);
-        const quantity = parseInt(form.querySelector("#quantity").value);
-        const expireDate = form.querySelector("#expire_date").value;
+        const addQuantity = parseInt(form.querySelector("#add_quantity").value) || 0;
+        const removeQuantity = parseInt(form.querySelector("#remove_quantity").value) || 0;
+        const newPrice = parseFloat(form.querySelector("#new_price").value);
 
-        if (isNaN(price) || isNaN(quantity) || price < 0 || quantity < 0) {
-            throw new Error("Invalid price or quantity values");
-        }
-
-        if (!expireDate) {
-            throw new Error("Expiry date is required");
+        if (addQuantity < 0 || removeQuantity < 0 || (newPrice && newPrice < 0)) {
+            throw new Error("Values cannot be negative");
         }
 
         const data = {
             medicine_id: id,
-            price: price,
-            quantity: quantity,
-            expire_date: expireDate
+            add_quantity: addQuantity,
+            remove_quantity: removeQuantity,
+            new_price: newPrice || null
         };
 
         const response = await fetch('../php/update_stock.php', {
@@ -175,13 +232,82 @@ async function updateMedicine(id, form) {
         // Reload page after a short delay
         setTimeout(() => {
             window.location.reload();
-        }, 1000);
+        }, 3000);
 
     } catch (error) {
         console.error("Error updating medicine:", error);
         showError(error.message || "Error updating medicine");
     }
 }
+
+// Function to show medicine details
+function showMedicineDetails(medicine) {
+    if (currentDetailsModal) {
+        closeDetailsModal();
+    }
+
+    const modal = document.createElement("div");
+    modal.className = "medicine-details-modal";
+    modal.innerHTML = `
+        <div class="medicine-details-content">
+            <div class="medicine-details-header">
+                <h3>${medicine.medicine_name}</h3>
+                <button class="close-details" type="button">&times;</button>
+            </div>
+            <div class="medicine-details-info">
+                <p><strong>Brand:</strong> ${medicine.brand_name}</p>
+                <p><strong>Description:</strong> ${medicine.description}</p>
+                <p><strong>Price:</strong> ብር${medicine.price}</p>
+                <p><strong>Quantity:</strong> ${medicine.quantity}</p>
+                <p><strong>Form:</strong> ${medicine.form}</p>
+                <p><strong>Pharmacy:</strong> ${medicine.pharmacy_name}</p>
+                <p><strong>Location:</strong> ${medicine.location}</p>
+                <p><strong>Phone:</strong> ${medicine.phone}</p>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+    currentDetailsModal = modal;
+
+    // Show modal with animation
+    requestAnimationFrame(() => {
+        modal.classList.add("active");
+    });
+
+    // Add event listeners
+    const closeBtn = modal.querySelector(".close-details");
+    if (closeBtn) {
+        closeBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            closeDetailsModal();
+        });
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener("DOMContentLoaded", function() {
+    // Fetch medicines when page loads
+    fetchMedicines();
+
+    // Close modals when clicking outside
+    document.addEventListener("click", function(e) {
+        if (currentModal && e.target === currentModal) {
+            closeModal();
+        }
+        if (currentDetailsModal && e.target === currentDetailsModal) {
+            closeDetailsModal();
+        }
+    });
+
+    // Close modals when pressing Escape key
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+            if (currentModal) closeModal();
+            if (currentDetailsModal) closeDetailsModal();
+        }
+    });
+});
 
 // Add CSS for the modal and error message
 const style = document.createElement('style');

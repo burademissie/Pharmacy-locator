@@ -9,7 +9,8 @@ if (!isset($_SESSION['pharmacy_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $pharmacy_id =1; // ID of the currently logged-in pharmacy
+    $pharmacy_id = $_SESSION['pharmacy_id'];
+ // ID of the currently logged-in pharmacy
 
     // Collect and sanitize inputs
     $name = trim($_POST['name']);
@@ -32,8 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("isssddsss", $pharmacy_id, $name, $brand, $description, $quantity, $price, $category, $dosage, $edate);
 
     if ($stmt->execute()) {
-        // header("Location: ../dashboard/pharmacy_dashboard.php?status=added");
-        header("Location: ../html/Addmed.html");
+        header("Location: Dashboard.php?status=added");
         exit();
     } else {
         echo "Failed to add medicine. Please try again.";

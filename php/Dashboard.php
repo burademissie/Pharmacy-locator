@@ -29,14 +29,6 @@ $pharmacyId = $_SESSION['pharmacy_id'];
 // Get medicine count
 $medicineCount = countMedicines($conn, $pharmacyId);
 
-// Get all medicines for this pharmacy
-$sql = "SELECT id, medicine_name, description, price, quantity, form, expire_date, brand_name FROM medicine WHERE pharmacy_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $pharmacyId);
-$stmt->execute();
-$result = $stmt->get_result();
-$medicines = $result->fetch_all(MYSQLI_ASSOC);
-
 $conn->close();
 ?>
 
@@ -78,35 +70,10 @@ $conn->close();
             </div>
             <!-- Medicines List Section -->
             <div class="results-section" id="medicinesList">
-                <?php if (count($medicines) > 0): ?>
-                    <?php foreach ($medicines as $med): ?>
-                        <div class="pharmacy-card">
-                            <div style="flex:1">
-                                <div class="pharmacy-name">
-                                    <?php echo htmlspecialchars($med['medicine_name']); ?>
-                                    <span style="font-size:0.7rem; color:rgba(255,255,255,0.6)">
-                                        (<?php echo htmlspecialchars($med['brand_name']); ?>)
-                                    </span>
-                                </div>
-                                <div class="pharmacy-description"><?php echo htmlspecialchars($med['description']); ?></div>
-                                <div class="pharmacy-details">
-                                    <span>Price: ₦<?php echo htmlspecialchars($med['price']); ?></span>
-                                    <span>Qty: <?php echo htmlspecialchars($med['quantity']); ?></span>
-                                    <span>Form: <?php echo htmlspecialchars($med['form']); ?></span>
-                                </div>
-                            </div>
-                            <button class="update-btn" data-medicine-id="<?php echo $med['id']; ?>">
-                                <svg class="svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                Update
-                            </button>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                <!-- Medicine cards will be inserted here by JavaScript -->
             </div>
             <!-- Not Found Message -->
-            <div id="notFoundMessage" class="not-found" style="<?php echo count($medicines) > 0 ? 'display:none' : 'display:block'; ?>">
+            <div id="notFoundMessage" class="not-found">
                 <i class="fas fa-prescription-bottle-alt"></i>
                 <h2>No Medicines Found</h2>
                 <p>This pharmacy does not have any medicines yet.</p>
