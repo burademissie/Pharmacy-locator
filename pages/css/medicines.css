@@ -180,11 +180,12 @@ body {
 }
 
 .search-container {
+    position: relative;
     display: flex;
     max-width: 600px;
     margin: 0 auto;
     border-radius: 50px;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -219,6 +220,54 @@ body {
     background: linear-gradient(to right, #4fd1f1, #1a1f8a);
 }
 
+/* Autocomplete Dropdown */
+.autocomplete-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border-radius: 0 0 1rem 1rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+}
+
+.autocomplete-item {
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.autocomplete-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.autocomplete-item .medicine-icon {
+    font-size: 1.2rem;
+    color: var(--gradient-start);
+}
+
+.autocomplete-item .medicine-info {
+    flex: 1;
+}
+
+.autocomplete-item .medicine-name {
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 0.2rem;
+}
+
+.autocomplete-item .medicine-price {
+    font-size: 0.9rem;
+    color: var(--gradient-start);
+}
+
 /* Results Section */
 .results-section {
     display: none;
@@ -248,7 +297,6 @@ body {
     color: var(--gradient-start);
     margin-right: 1.5rem;
 }
-
 
 .pharmacy-name {
     font-size: 2rem;
