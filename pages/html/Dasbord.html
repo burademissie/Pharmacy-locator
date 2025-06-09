@@ -3,39 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashbord</title>
-    <link rel="stylesheet" href="../css/Dashbord.css">
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <title>Pharmacy Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/Dasbord.css">
 </head>
 <body>
-    
-<div class="logo">Med<span>Finder</span></div>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <a href="../html/landing.html" class="a"><div class="sidebar-header">
+                <h2>MED FINDER</h2>
+            </div></a>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href=""><i class="fas fa-pills"></i>Dashboard</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1  class="h1-dash">Pharmacy Medicines</h1>
+                <button id="addMedicineBtn"  class="Addmed-btn">+ Add Medicine</button>
+            </div>
+            <!-- Medicines List Section -->
+            <div class="results-section" id="medicinesList">
+                <!-- Medicine cards will be inserted here by JavaScript -->
+            </div>
+            <!-- Not Found Message -->
+            <div id="notFoundMessage" class="not-found">
+                <i class="fas fa-prescription-bottle-alt"></i>
+                <h2>No Medicines Found</h2>
+                <p>This pharmacy does not have any medicines yet.</p>
+                <p>Click 'Add Medicine' to add your first medicine.</p>
+            </div>
+        </div>
+    </div>
+<script>
+// Placeholder JS: Replace with AJAX call to fetch pharmacy's medicines
+const medicines = []; // Example: [{name: 'Paracetamol', description: 'Pain reliever', price: 10, quantity: 50}]
 
-<div class="update" >
-    <button>Add New</button>  
-    <button>Update</button>
-</div>
-
-
-<div class="Message" >
-    <h1>
-<svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="12" fill="rgb(130, 207, 15)" />
-    <path d="M17.59 7.58a1 1 0 0 1 0 1.41l-6.59 6.59a1 1 0 0 1-1.41 0l-2.59-2.59a1 1 0 1 1 1.41-1.41l1.88 1.88 5.88-5.88a1 1 0 0 1 1.42 0z" fill="white"/>
-  </svg>
-  <span>Medicine Successfully Added...</span>
-  </h1>
-</div>
-</div>
-
+function renderMedicines() {
+    const list = document.getElementById('medicinesList');
+    const notFound = document.getElementById('notFoundMessage');
+    list.innerHTML = '';
+    if (medicines.length === 0) {
+        list.style.display = 'none';
+        notFound.style.display = 'block';
+    } else {
+        list.style.display = 'grid';
+        notFound.style.display = 'none';
+        medicines.forEach(med => {
+            const card = document.createElement('div');
+            card.className = 'pharmacy-card';
+            card.innerHTML = `
+                <div style="flex:1">
+                    <div class="pharmacy-name">${med.name}</div>
+                    <div class="pharmacy-description">${med.description}</div>
+                    <div class="pharmacy-details">
+                        <span>Price: $${med.price}</span>
+                        <span>Qty: ${med.quantity}</span>
+                    </div>
+                </div>
+                <button class="update-btn" style="margin-left:2rem; padding:0.5rem 1.2rem; background:linear-gradient(to right, var(--gradient-start), var(--gradient-end)); color:white; border:none; border-radius:1rem; cursor:pointer; font-weight:600;">Update</button>
+            `;
+            list.appendChild(card);
+        });
+    }
+}
+renderMedicines();
+// Add event for Add Medicine button
+// document.getElementById('addMedicineBtn').onclick = function() { ... };
+</script>
 </body>
 </html>
