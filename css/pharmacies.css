@@ -1,0 +1,117 @@
+/* Pharmacies Page Styles */
+.pharmacies-header {
+    margin-bottom: 40px;
+}
+
+.pharmacies-header h1 {
+    color: rgb(22, 125, 227);
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.pharmacies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    padding: 20px 0;
+}
+
+.pharmacy-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.pharmacy-image {
+    background: rgb(22, 125, 227);
+    width: 70px;
+    height: 70px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.pharmacy-image i {
+    font-size: 2rem;
+    color: white;
+}
+
+.pharmacy-info h3 {
+    color: rgb(22, 125, 227);
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+}
+
+.pharmacy-address {
+    color: #999;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pharmacy-address i {
+    color: rgb(22, 125, 227);
+}
+
+.pharmacy-details {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.pharmacy-hours,
+.pharmacy-phone {
+    color: #fff;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pharmacy-hours i,
+.pharmacy-phone i {
+    color: rgb(22, 125, 227);
+}
+
+.pharmacy-status {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.pharmacy-status.open {
+    background: rgba(39, 174, 96, 0.2);
+    color: #27ae60;
+    border: 1px solid rgba(39, 174, 96, 0.3);
+}
+
+.pharmacy-status.closed {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pharmacies-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .pharmacies-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pharmacy-card {
+        padding: 20px;
+    }
+
+    .pharmacy-details {
+        flex-direction: column;
+        gap: 10px;
+    }
+} 

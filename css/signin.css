@@ -1,0 +1,224 @@
+:root {
+    --primary-blue: #167de3;
+    --gradient-start: #62e1f1;
+    --gradient-end: #1b2688;
+    --dark-bg: #050A24;
+    --text-light: #ffffff;
+    --card-bg: rgba(17, 24, 39, 0.8);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Unbounded', sans-serif;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    height: 100vh;
+    overflow: scroll;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    max-height: 900px;
+}
+
+/* Form Container */
+.form-container {
+    flex: 1;
+    padding: 2rem 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--dark-bg);
+    overflow-y: auto;
+}
+
+/* Image Container */
+.image-container2 {
+    flex: 0.8;
+    background-image: url('../Src/pharmacy.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+
+.image-container2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 10, 36, 0.7);
+}
+
+/* Headings */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--gradient-start);
+    text-align: center;
+}
+
+.intro-text {
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Form Elements */
+.input-group {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto 1rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(98, 225, 241, 0.3);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-align: left;
+    padding-left: 50px;
+    position: relative;
+
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    opacity: 1;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--gradient-start);
+    box-shadow: 0 0 0 3px rgba(98, 225, 241, 0.2);
+    text-align: left;
+        padding-left: 50px;
+
+}
+
+/* Buttons */
+.signin-btn {
+    width: 100%;
+    max-width: 380px;
+    padding: 0.8rem;
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(98, 225, 241, 0.3);
+    margin: 1rem auto;
+    display: block;
+}
+
+.signin-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(98, 225, 241, 0.4);
+}
+
+/* Links */
+.signup-link {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin: 0 auto;
+}
+
+.signup-link a {
+    color: var(--gradient-start);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+    color: var(--gradient-end);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .image-container2 {
+        height: 200px;
+        flex: none;
+    }
+    
+    .form-container {
+        padding: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+}
+
+  .icon {
+            width: 1em;
+            height: 1em;
+            fill: currentColor;
+            display: inline-block;
+            position: relative;
+            top: -30px;
+            left: 13px;
+            color: rgba(255, 255, 255, 0.7);
+
+        }
+
+      
+
+
+    .icon-large {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+
+        .icon-medium {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .icon-small {
+            width: 1.1rem;
+            height: 1.1rem;
+        }
+.Finder
+{
+     font-family: "Unbounded", sans-serif;
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Med Finder - Pharmacy Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/medicines.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <a href="../html/landing.html" class="a"><div class="sidebar-header">
+                <h2>MED FINDER</h2>
+            </div></a>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                   
+                    <li>
+                        <a href=""><i class="fas fa-pills"></i>Medicines</a>
+                    </li>
+                   
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Stats -->
+            <div class="stats-container">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="stats-info">
+                        <h3>Total Medicines</h3>
+                        <p class="stats-value">150+</p>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-clinic-medical"></i>
+                    </div>
+                    <div class="stats-info">
+                        <h3>Total Pharmacies</h3>
+                        <p class="stats-value">25+</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Medicines Search Section -->
+            <section id="medicines-section">
+                <div class="search-section">
+                    <h1>Find Your Medicine</h1>
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Enter medicine name...">
+                        <button id="searchButton">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection">
+                    <!-- Medicine cards will be inserted here by JavaScript -->
+                </div>
+
+                <!-- Not Found Message -->
+                <div id="notFoundMessage" class="not-found">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                    <h2>Medicine Not Found</h2>
+                    <p>We couldn't find the medicine you're looking for.</p>
+                    <p>Please try searching with a different name or check the spelling.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+<script src="../js/medicines.js" ></script>
+</body>
+</html>

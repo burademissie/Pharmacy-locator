@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Medicine</title>
+    <link rel="stylesheet" href="../css/Addmed.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<div id="popup" class="popup">
+  <svg width="50" height="50" viewBox="0 0 24 24" fill="none">
+  <circle cx="12" cy="12" r="10" fill="rgb(130, 207, 15)" />
+  <path d="M9 12.5l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+  <span>Medicine Successfully Added</span>
+</div>
+
+
+
+    <a href="../html/landing.html" class="a"> <header class="form-header">
+        <div class="logo">Med<span>Finder</span></div>
+    </header></a>
+   
+    
+    <main class="form-container">
+        <div class="form-card">
+            <h2 class="form-title gradient-text">Add New Medicine</h2>
+          
+            <div id="message-container"></div>
+
+            <form action="../php/Addmed.php" method="POST" id="medicine-form">
+                <div class="form-group">
+                    <label for="name">Medicine Name*</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                 <div class="form-group">
+                    <label for="name">Brand Name*</label>
+                    <input type="text" id="brand" name="brand" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description*</label>
+                    <textarea id="description" name="description" rows="3" required></textarea>
+                </div>
+
+
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quantity">Quantity*</label>
+                        <input type="number" id="quantity" name="quantity" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Price*</label>
+                        <input type="number" id="price" name="price" min="0" step="0.01" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category">
+                        <option value="">Select Category</option>
+                        <option value="Antibiotic">Antibiotic</option>
+                        <option value="Analgesic">Analgesic</option>
+                        <option value="Antihistamine">Antihistamine</option>
+                        <option value="Antacid">Antacid</option>
+                        <option value="Vitamin">Vitamin</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                   <div class="form-group">
+                    <label for="dosage">Dosage Form*</label>
+                    <select id="dosage" name="dosage" required > 
+                        <option value="">Tablet</option>
+                        <option value="Antibiotic">Syrup</option>
+                        <option value="Analgesic">Suspension</option>
+                        <option value="Antihistamine">Solution</option>
+                        <option value="Antacid">Lozenges </option>
+                        <option value="Vitamin">Cream </option>
+                        <option value="Other">Ointment </option>
+                        <option value="Other">Lotion  </option>
+                        <option value="Other">other</option>
+
+                    </select>
+                </div>
+
+                  <div class="form-group">
+                    <label for="name">Expire Date*</label>
+                    <input type="date" id="edate" name="edate" required>
+                </div>
+
+
+                <div class="form-actions">
+                    <button onclick="Popup()" type="submit" class="btn btn-primary">Add Medicine</button>
+                    <button type="reset" class="btn btn-secondary">Reset Form</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="../js/Addmed.js">
+       
+    </script>
+</body>
+</html>
