@@ -49,6 +49,10 @@ if(count===7)
   setTimeout(() => {
     popup.style.display = "none";
   }, 3000);
+
+  setTimeout(function(){
+    window.location.href = "../html/Dasbord.html";},3000);
+  
 }
 else
 return;

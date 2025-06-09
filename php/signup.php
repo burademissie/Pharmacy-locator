@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($insert->execute()) {
                 $_SESSION['pharmacy_id'] = $insert->insert_id;
                 $_SESSION['pharmacy_name'] = $name;
-                header("Location: ../html/Addmed.html");
+                header("Location: ../html/Dasbord.html");
                 exit();
             } else {
                 $error = "Registration failed. Please try again.";
