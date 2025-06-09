@@ -3,42 +3,50 @@ include "db.php";
 session_start();
 $error = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+// Show detailed error messages during development
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = trim($_POST["email"]);
+    echo $email;
+    $password = trim($_POST["password"]);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Use prepared statements to avoid SQL injection
+    // Use prepared statement
     $stmt = $conn->prepare("SELECT id, pharmacy_name, pass FROM pharmacy WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
-    var_dump($stmt);
-    
-    // Check if user exists
-    if ($stmt->num_rows > 0) {
-        echo $email;
-        $stmt->bind_result($id, $name, $hashed_password);
-        $stmt->fetch();
+    if ($stmt) {
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+        $sql = "SELECT * FROM pharmacy";
+$result = $conn->query($sql);
 
-        if (password_verify($password, $hashed_password)) {
-            $_SESSION['pharmacy_id'] = $id;
-            $_SESSION['pharmacy_name'] = $name;
-            header("Location: Addmed.php"); // Redirect after login
-            exit;
+
+        if ($stmt->num_rows == 1) {
+            $stmt->bind_result($id, $name, $hashed_password);
+            $stmt->fetch();
+
+            if (password_verify($password, $hashed_password)) {
+                $_SESSION['pharmacy_id'] = $id;
+                $_SESSION['pharmacy_name'] = $name;
+                header("Location: Dashboard.php");
+                exit;
+            } else {
+                $error = "Invalid password.";
+            }
         } else {
-            $error = "Invalid password.";
+            $error = "No account found with that email.";
         }
+
+        $stmt->close();
     } else {
-        // var_dump($stmt);
-        $error = "No account found with that email.";
+        $error = "Something went wrong. Please try again.";
     }
 
-    $stmt->close();
     $conn->close();
 }
 ?>
@@ -61,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <h2>Welcome Back!</h2>
 
       <?php if ($error): ?>
-        <p style="color:red;"><?php echo $error; ?></p>
+        <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
       <?php endif; ?>
 
       <form id="signin-form" action="" method="POST" onsubmit="return validateForm();">
