@@ -11,5 +11,3 @@ function Contact() {
     behavior: 'smooth' 
   });
 }
-
-console.log("take this ")
