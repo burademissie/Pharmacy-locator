@@ -1,5 +1,12 @@
 <?php
+session_start();
 include "db.php";
+
+// Check if pharmacy is logged in
+if (!isset($_SESSION['pharmacy_id'])) {
+    header("Location: login.php");
+    exit();
+}
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -16,14 +23,14 @@ function countMedicines($conn, $pharmacyId) {
     return $row['total'];
 }
 
-// Get pharmacy ID (you'll need to set this based on your authentication)
-$pharmacyId = 1; // Replace with actual pharmacy ID from session
+// Get pharmacy ID from session
+$pharmacyId = $_SESSION['pharmacy_id'];
 
 // Get medicine count
 $medicineCount = countMedicines($conn, $pharmacyId);
 
 // Get all medicines for this pharmacy
-$sql = "SELECT * FROM medicine WHERE pharmacy_id = ?";
+$sql = "SELECT id, medicine_name, description, price, quantity, form, expire_date, brand_name FROM medicine WHERE pharmacy_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $pharmacyId);
 $stmt->execute();
@@ -65,7 +72,9 @@ $conn->close();
                     <h1 class="h1-dash">Pharmacy Medicines</h1>
                     <p style="color: #666; margin-top: 0.5rem;">Total Medicines: <?php echo $medicineCount; ?></p>
                 </div>
-                <button id="addMedicineBtn" class="Addmed-btn">+ Add Medicine</button>
+                <a href="../html/Addmed.html">
+                    <button id="addMedicineBtn" class="Addmed-btn">+ Add Medicine</button>
+                </a>
             </div>
             <!-- Medicines List Section -->
             <div class="results-section" id="medicinesList">
@@ -73,14 +82,25 @@ $conn->close();
                     <?php foreach ($medicines as $med): ?>
                         <div class="pharmacy-card">
                             <div style="flex:1">
-                                <div class="pharmacy-name"><?php echo htmlspecialchars($med['name']); ?></div>
+                                <div class="pharmacy-name">
+                                    <?php echo htmlspecialchars($med['medicine_name']); ?>
+                                    <span style="font-size:0.7rem; color:rgba(255,255,255,0.6)">
+                                        (<?php echo htmlspecialchars($med['brand_name']); ?>)
+                                    </span>
+                                </div>
                                 <div class="pharmacy-description"><?php echo htmlspecialchars($med['description']); ?></div>
                                 <div class="pharmacy-details">
-                                    <span>Price: $<?php echo htmlspecialchars($med['price']); ?></span>
+                                    <span>Price: ₦<?php echo htmlspecialchars($med['price']); ?></span>
                                     <span>Qty: <?php echo htmlspecialchars($med['quantity']); ?></span>
+                                    <span>Form: <?php echo htmlspecialchars($med['form']); ?></span>
                                 </div>
                             </div>
-                            <button class="update-btn" style="margin-left:2rem; padding:0.5rem 1.2rem; background:linear-gradient(to right, var(--gradient-start), var(--gradient-end)); color:white; border:none; border-radius:1rem; cursor:pointer; font-weight:600;">Update</button>
+                            <button class="update-btn" data-medicine-id="<?php echo $med['id']; ?>">
+                                <svg class="svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Update
+                            </button>
                         </div>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -94,5 +114,6 @@ $conn->close();
             </div>
         </div>
     </div>
+    <script src="../js/dashboard.js"></script>
 </body>
 </html>

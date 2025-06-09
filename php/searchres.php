@@ -3,8 +3,25 @@ require_once 'db.php';
 
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Prepared statement to search
-$stmt = $conn->prepare("SELECT medicine_name, description, price, quantity FROM medicine WHERE LOWER(medicine_name) LIKE ?");
+// Modified query to include pharmacy details
+$stmt = $conn->prepare("
+    SELECT 
+        m.id,
+        m.medicine_name,
+        m.description,
+        m.price,
+        m.quantity,
+        m.form,
+        m.expire_date,
+        p.name as pharmacy_name,
+        p.location,
+        p.phone
+    FROM medicine m
+    JOIN pharmacy p ON m.pharmacy_id = p.id
+    WHERE LOWER(m.medicine_name) LIKE ?
+    ORDER BY m.medicine_name ASC
+");
+
 $searchTerm = "%$search%";
 $stmt->bind_param("s", $searchTerm);
 $stmt->execute();
@@ -18,3 +35,6 @@ while ($row = $result->fetch_assoc()) {
 
 header('Content-Type: application/json');
 echo json_encode($medicines);
+
+$stmt->close();
+$conn->close();

@@ -6,38 +6,47 @@
     <title>Pharmacy Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/Dashbord.css">
+    <link rel="stylesheet" href="../css/Dasbord.css">
+   
 </head>
-<body id="take" >
-<div class="logo">Med<span>Finder</span></div>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <a href="../html/landing.html" class="a"><div class="sidebar-header">
+                <h2>MED FINDER</h2>
+            </div></a>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href=""><i class="fas fa-pills"></i>Dashboard</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1 class="h1-dash">Pharmacy Medicines</h1>
+                <a href="../html/Addmed.html">
+                <button id="addMedicineBtn" class="Addmed-btn">+ Add Medicine</button></a>
+            </div>
+            <!-- Medicines List Section -->
+            <div class="results-section" id="medicinesList">
+                <!-- Medicine cards will be inserted here by JavaScript -->
+            </div>
+            <!-- Not Found Message -->
+            <div id="notFoundMessage" class="not-found">
+                <i class="fas fa-prescription-bottle-alt"></i>
+                <h2>No Medicines Found</h2>
+                <p>This pharmacy does not have any medicines yet.</p>
+                <p>Click 'Add Medicine' to add your first medicine.</p>
+            </div>
+        </div>
+    </div>
+<script src="../js/dashboard.js">
+// Mock data for medicines
 
-<div class="update">
-
-    <div class="update_btn"><button><svg class="svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-  <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-Update</button></div>
-    <div><button><a href="Addmed.html"><svg class="svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-  <path d="M12 5v14m-7-7h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
- Add New</a></button></div>  
-</div>
-                <div class="results-section" id="resultsSection">
-
-                </div>
-
-                <div id="notFoundMessage" class="not-found">
-                    <i class="fas fa-prescription-bottle-alt"></i>
-                    <h2>No Medicine</h2>
-                    <p>Currently You Have No Medicine On Your Stock</p>
-                    <p>Please Add Medicine First To See Them Listed Here</p>
-                </div>
-
-
-
-
-
-<script src="../js/Dashbord.js" ></script>
 </script>
 </body>
 </html>
