@@ -62,7 +62,7 @@ $conn->close();
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <div>
                     <h1 class="h1-dash">Pharmacy Medicines</h1>
-                    <p style="color: #666; margin-top: 0.5rem;">Total Medicines: <?php echo $medicineCount; ?></p>
+                    <p style="color: #666 ; margin-top: 0.5rem;">Total Medicines: <?php echo $medicineCount; ?></p>
                 </div>
                 <a href="../html/Addmed.html">
                     <button id="addMedicineBtn" class="Addmed-btn">+ Add Medicine</button>

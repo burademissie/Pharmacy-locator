@@ -1,3 +1,23 @@
+<?php
+include "db.php";
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Get total medicines
+$sql_medicines = "SELECT COUNT(*) as total_medicines FROM medicine";
+$result_medicines = $conn->query($sql_medicines);
+$total_medicines = $result_medicines->fetch_assoc()['total_medicines'];
+
+// Get total pharmacies
+$sql_pharmacies = "SELECT COUNT(*) as total_pharmacies FROM pharmacy";
+$result_pharmacies = $conn->query($sql_pharmacies);
+$total_pharmacies = $result_pharmacies->fetch_assoc()['total_pharmacies'];
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -40,7 +60,6 @@
 
           <div class="features">
             <div class="feature-tag"><i class="fas fa-bolt"></i> Fast</div>
-
             <div class="feature-tag">
               <i class="fas fa-map-marker-alt"></i> Accurate
             </div>
@@ -48,7 +67,7 @@
           </div>
 
           <div class="cta-buttons">
-            <a href="./medicines.html" class="btn btn-primary"
+            <a href="../php/medicines.php" class="btn btn-primary"
               >Search Medicines</a
             >
             <a href="../php/signup.php" class="btn btn-secondary"
@@ -129,7 +148,7 @@
       </div>
     </section>
 
-    <script src="../js/landing.js"></script>
+    <!-- <script src="../js/landing.js"></script> -->
 
     <footer class="footer">
       <div class="footer-content">
@@ -148,9 +167,9 @@
           <h3>Contact</h3>
           <ul>
             <li>
-              <i class="fas fa-map-marker-alt"></i> 123 Health St, Medical City
+              <i class="fas fa-map-marker-alt"></i> 4 kilo university
             </li>
-            <li><i class="fas fa-phone"></i> +1 (234) 567-8900</li>
+            <li><i class="fas fa-phone"></i> +251 9060212134</li>
             <li><i class="fas fa-envelope"></i> info@medfinder.com</li>
           </ul>
         </div>
@@ -160,4 +179,4 @@
       </div>
     </footer>
   </body>
-</html>
+</html> 

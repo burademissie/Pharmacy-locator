@@ -1,123 +1,175 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // DOM Elements
-    const searchInput = document.getElementById("searchInput");
-    const searchButton = document.getElementById("searchButton");
-    const resultsSection = document.getElementById("resultsSection");
-    const notFoundMessage = document.getElementById("notFoundMessage");
-    const autocompleteDropdown = document.getElementById("autocompleteDropdown");
+document.addEventListener("DOMContentLoaded", function () {
+  const searchInput = document.getElementById("searchInput");
+  const searchButton = document.getElementById("searchButton");
+  const resultsSection = document.getElementById("resultsSection");
+  const notFoundMessage = document.getElementById("notFoundMessage");
 
-    let debounceTimer;
+  let currentDetailsModal = null;
 
-    // Initialize with not found message hidden
-    notFoundMessage.style.display = "none";
-
-    // Perform search function
-    async function performSearch() {
-        const searchTerm = searchInput.value.trim();
+  // Function to fetch and display statistics
+  async function fetchAndDisplayStats() {
+    try {
+      const response = await fetch('../php/get_stats.php');
+      const data = await response.json();
+      
+      if (data.status === 'success') {
+        const statsCard = document.createElement('div');
+        statsCard.className = 'stats-card';
+        statsCard.innerHTML = `
+          <div class="stat-item">
+            <div class="stat-number">${data.total_pharmacies}</div>
+            <div class="stat-label">Total Pharmacies</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">${data.total_medicines}</div>
+            <div class="stat-label">Total Medicines</div>
+          </div>
+        `;
         
-        if (!searchTerm) {
-            resultsSection.innerHTML = "";
-            notFoundMessage.style.display = "none";
-            return;
-        }
+        // Insert stats card at the beginning of the search section
+        const searchSection = document.querySelector('.search-section');
+        searchSection.insertBefore(statsCard, searchSection.firstChild);
+      }
+    } catch (error) {
+      console.error('Error fetching statistics:', error);
+    }
+  }
 
-        try {
-            // Show loading state
-            resultsSection.innerHTML = "<div class='loading'>Searching medicines...</div>";
-            
-            const response = await fetch(`../php/searchres.php?search=${encodeURIComponent(searchTerm)}`);
-            console.log("Search response status:", response.status);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+  // Call fetchAndDisplayStats when the page loads
+  fetchAndDisplayStats();
 
-            const result = await response.json();
-            console.log("Search result:", result);
-            
-            if (result.status === 'success') {
-                if (result.data && result.data.length > 0) {
-                    displayResults(result.data);
-                    notFoundMessage.style.display = "none";
-                } else {
-                    resultsSection.innerHTML = "";
-                    notFoundMessage.style.display = "flex";
-                    console.log("No medicines found in the response");
-                }
-            } else {
-                throw new Error(result.message || 'Unknown error occurred');
-            }
-        } catch (error) {
-            console.error("Search error:", error);
-            resultsSection.innerHTML = "";
-            notFoundMessage.querySelector("p").textContent = `Error: ${error.message}`;
-            notFoundMessage.style.display = "flex";
-        }
+  // Function to close details modal
+  function closeDetailsModal() {
+    if (currentDetailsModal) {
+      currentDetailsModal.classList.remove("active");
+      setTimeout(() => {
+        currentDetailsModal.remove();
+        currentDetailsModal = null;
+      }, 300);
+    }
+  }
+
+  // Function to show medicine details
+  function showMedicineDetails(medicine) {
+    if (currentDetailsModal) {
+      closeDetailsModal();
     }
 
-    // Display results function
-    function displayResults(medicines) {
-        console.log("Displaying medicines:", medicines);
-        resultsSection.innerHTML = "";
-        
-        medicines.forEach(medicine => {
-            const medicineCard = document.createElement("div");
-            medicineCard.className = "pharmacy-card";
-            medicineCard.innerHTML = `
-                <div class="medicine-icon">
-                    <i class="fas fa-pills"></i>
-                </div>
-                <div class="medicine-info">
-                    <h3 class="medicine-name">${medicine.medicine_name || 'No Name'}</h3>
-                    <p class="medicine-description">${medicine.description || 'No Description'}</p>
-                    <div class="medicine-details">
-                        <span class="medicine-price">ብር${medicine.price || '0.00'}</span>
-                        <span class="medicine-stock">In Stock: ${medicine.quantity || '0'}</span>
-                    </div>
-                    <div class="pharmacy-info">
-                        <div class="pharmacy-name">${medicine.pharmacy_name || 'Unknown Pharmacy'}</div>
-                        <div class="pharmacy-location">
-                            <i class="fas fa-map-marker-alt"></i> ${medicine.location || 'No Location'}
-                        </div>
-                        <div class="pharmacy-phone">
-                            <i class="fas fa-phone"></i> ${medicine.phone || 'No Phone'}
-                        </div>
-                    </div>
-                </div>
-            `;
-            resultsSection.appendChild(medicineCard);
-        });
-    }
+    const modal = document.createElement("div");
+    modal.className = "medicine-details-modal";
+    modal.innerHTML = `
+      <div class="medicine-details-content">
+        <div class="medicine-details-header">
+          <h3>${medicine.medicine_name}</h3>
+          <button class="close-details" type="button">&times;</button>
+        </div>
+        <div class="medicine-details-info">
+          <p><strong>Brand:</strong> ${medicine.brand_name}</p>
+          <p><strong>Description:</strong> ${medicine.description}</p>
+          <p><strong>Price:</strong> ${medicine.price} ብር</p>
+          <p><strong>Quantity:</strong> ${medicine.quantity}</p>
+          <p><strong>Form:</strong> ${medicine.form}</p>
+          <p><strong>Pharmacy:</strong> ${medicine.pharmacy_name}</p>
+          <p><strong>Location:</strong> ${medicine.location}</p>
+          <p><strong>Phone:</strong> ${medicine.phone}</p>
+        </div>
+      </div>
+    `;
 
-    // Debounce function to limit API calls
-    function debounce(func, delay) {
-        return function(...args) {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => func.apply(this, args), delay);
-        };
-    }
+    document.body.appendChild(modal);
+    currentDetailsModal = modal;
 
-    // Event listeners
-    searchButton.addEventListener("click", performSearch);
-    
-    // Search on Enter key
-    searchInput.addEventListener("keyup", function(e) {
-        if (e.key === "Enter") {
-            performSearch();
-        }
+    // Show modal with animation
+    requestAnimationFrame(() => {
+      modal.classList.add("active");
     });
 
-    // Real-time search with debouncing
-    searchInput.addEventListener("input", debounce(function() {
-        const searchTerm = searchInput.value.trim();
-        if (searchTerm.length >= 2) {
-            performSearch();
-        } else if (searchTerm.length === 0) {
-            resultsSection.innerHTML = "";
-            notFoundMessage.style.display = "none";
-        }
-    }, 300));
+    // Add event listeners
+    const closeBtn = modal.querySelector(".close-details");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        closeDetailsModal();
+      });
+    }
+  }
 
-    // Initial search to show all medicines
-    performSearch();
+  function displayMedicineCards(medicines) {
+    resultsSection.innerHTML = "";
+
+    if (medicines.length === 0) {
+      notFoundMessage.style.display = "block";
+      resultsSection.style.display = "none";
+      return;
+    }
+
+      notFoundMessage.style.display = "none";
+    resultsSection.style.display = "grid";
+
+    medicines.forEach((medicine) => {
+        const card = document.createElement("div");
+        card.className = "pharmacy-card";
+        card.innerHTML = `
+          <div class="medicine-icon">
+            <i class="fas fa-pills"></i>
+          </div>
+          <div class="medicine-info">
+            <h3 class="medicine-name">${medicine.medicine_name}</h3>
+            <p class="medicine-description">${medicine.description}</p>
+            <div class="medicine-details">
+            <span class="medicine-price">ብር${medicine.price}</span>
+              <span class="medicine-stock">In Stock: ${medicine.quantity}</span>
+            </div>
+          </div>
+        `;
+
+      // Add click event to show details
+      card.addEventListener("click", () => {
+        showMedicineDetails(medicine);
+      });
+
+      resultsSection.appendChild(card);
+    });
+  }
+
+  function performSearch() {
+    const searchTerm = searchInput.value.trim();
+
+    if (searchTerm === "") {
+      displayMedicineCards([]);
+      return;
+    }
+
+    fetch(`../php/searchres.php?search=${encodeURIComponent(searchTerm)}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched data:", data);
+        displayMedicineCards(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        displayMedicineCards([]);
+      });
+  }
+
+  searchButton.addEventListener("click", performSearch);
+  searchInput.addEventListener("keyup", function (e) {
+    if (e.key === "Enter") {
+      performSearch();
+    }
+  });
+
+  // Close modals when clicking outside
+  document.addEventListener("click", (e) => {
+    if (currentDetailsModal && e.target === currentDetailsModal) {
+      closeDetailsModal();
+    }
+  });
+
+  // Close modals when pressing Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (currentDetailsModal) closeDetailsModal();
+    }
+  });
 });

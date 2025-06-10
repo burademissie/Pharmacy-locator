@@ -1,4 +1,4 @@
-/* dashboard.css */
+/* dashboard.css
 :root {
     --primary-blue: #4299f0;
     --gradient-start: #62e1f1;
@@ -101,7 +101,7 @@ top: -2px;
 /* .update_btn
 {
     visibility: hidden;
-} */
+} 
 
 .sidebar-nav a:hover {
     background: rgba(98, 225, 241, 0.1);
@@ -384,4 +384,4 @@ a {
     .welcome-text h1 {
         font-size: 1.5rem;
     }
-}
+} */

@@ -100,9 +100,10 @@ body {
     background: var(--card-bg);
     border-radius: 1rem;
     padding: 1.5rem;
+    margin-bottom: 2rem;
     display: flex;
+    justify-content: space-around;
     align-items: center;
-    transition: all 0.3s ease;
     border: 1px solid rgba(98, 225, 241, 0.1);
 }
 
@@ -180,12 +181,11 @@ body {
 }
 
 .search-container {
-    position: relative;
     display: flex;
     max-width: 600px;
     margin: 0 auto;
     border-radius: 50px;
-    overflow: visible;
+    overflow: hidden;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -220,59 +220,13 @@ body {
     background: linear-gradient(to right, #4fd1f1, #1a1f8a);
 }
 
-/* Autocomplete Dropdown */
-.autocomplete-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--card-bg);
-    border-radius: 0 0 1rem 1rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    max-height: 300px;
-    overflow-y: auto;
-    display: none;
-    z-index: 1000;
-}
-
-.autocomplete-item {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.autocomplete-item:hover {
-    background-color: #f8f9fa;
-}
-
-.autocomplete-item .medicine-icon {
-    margin-right: 1rem;
-    color: #3498db;
-}
-
-.autocomplete-item .medicine-info {
-    flex: 1;
-}
-
-.autocomplete-item .medicine-name {
-    font-weight: 500;
-    color: #2c3e50;
-    margin-bottom: 0.25rem;
-}
-
-.autocomplete-item .medicine-price {
-    color: #27ae60;
-    font-size: 0.9rem;
-}
-
 /* Results Section */
 .results-section {
     display: none;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
     margin-top: 2rem;
+    padding: 0 1rem;
 }
 
 .pharmacy-card {
@@ -280,57 +234,59 @@ body {
     border-radius: 1rem;
     padding: 1.5rem;
     display: flex;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    align-items: flex-start;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
     border: 1px solid rgba(98, 225, 241, 0.1);
-    height: 115px;
     cursor: pointer;
 }
 
 .pharmacy-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(98, 225, 241, 0.1);
 }
 
-.pharmacy-icon {
+.medicine-icon {
     font-size: 2rem;
     color: var(--gradient-start);
-    margin-right: 1.5rem;
+    padding: 1rem;
+    background: rgba(98, 225, 241, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.pharmacy-name {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+.medicine-info {
+    flex: 1;
+}
+
+.medicine-name {
+    font-size: 1.2rem;
     color: var(--gradient-start);
+    margin: 0 0 0.5rem 0;
 }
 
-.pharmacy-description {
+.medicine-description {
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.9rem;
-    margin-bottom: 0.8rem;
-    line-height: 1.5;
+    margin-bottom: 1rem;
+    line-height: 1.4;
 }
 
-.pharmacy-details {
+.medicine-details {
     display: flex;
     justify-content: space-between;
     font-size: 0.9rem;
-    position: relative;
 }
 
-.pharmacy-location {
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 600;
-    margin-top: 30px;
-   margin-left: 47vw;
+.medicine-price {
+    color: #27ae60;
+    font-weight: 500;
 }
-a {
-    text-decoration: none;
-    color: inherit; /* Optional: inherit color from parent */
-}
-.pharmacy-currently {
+
+.medicine-stock {
     color: rgba(255, 255, 255, 0.6);
-    margin-top: 30px;
 }
 
 /* Not Found Message */
@@ -438,6 +394,7 @@ a {
     margin: 0;
     padding: 0.5rem 0;
     border-bottom: 1px solid #f5f5f5;
+    color: #000000;
 }
 
 .medicine-details-info p:last-child {
@@ -445,15 +402,26 @@ a {
 }
 
 .medicine-details-info strong {
-    color: #2c3e50;
+    color: #000000;
     display: inline-block;
     width: 100px;
 }
 
-/* Update price display in all places */
-.medicine-price::before {
-    content: "ብር";
-    margin-right: 4px;
+/* Add styles for statistics card */
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    color: var(--gradient-start);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
 }
 
 /* Responsive Design */
@@ -474,4 +442,42 @@ a {
     .welcome-text h1 {
         font-size: 1.5rem;
     }
+
+    .search-section h1 {
+        font-size: 1.8rem;
+    }
+
+    .results-section {
+        grid-template-columns: 1fr;
+    }
+
+    .pharmacy-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .medicine-icon {
+        margin-bottom: 1rem;
+    }
+
+    .medicine-details {
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .stats-card {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+
+.nav-links a.logout-btn {
+    color: #ff6b6b;
+    transition: all 0.3s ease;
+}
+
+.nav-links a.logout-btn:hover {
+    color: #ff4757;
+    background: rgba(255, 107, 107, 0.1);
 }
